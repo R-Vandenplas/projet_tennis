@@ -12,6 +12,10 @@ public class Schedule {
 
     private int actualRound;
     private Tournament tournament;
+    public ScheduleType GetScheduleType()
+    {
+        return Type;
+    }
 
     public Schedule(ScheduleType type, int actualRound, Tournament tournament)
     {

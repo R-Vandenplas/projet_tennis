@@ -23,8 +23,23 @@ namespace projet
         public MainWindow()
         {
             InitializeComponent();
-            Set set = new SuperTieBreak();
-            set.Play();
+            for (int i = 0; i < 50; i++)
+            {
+                
+                Set set = new Set();
+                int winner = set.Play();
+                if (winner == 1)
+                {
+                    Console.WriteLine("Le joueur 1 a gagné");
+                    Console.WriteLine($"score du match : {set.ScoreOp1}  {set.ScoreOp2}");
+                }
+                else
+                {
+                    Console.WriteLine("Le joueur 2 a gagné");
+                    Console.WriteLine($"score du match : {set.ScoreOp2}  {set.ScoreOp1}");
+                }
+            }
+
         }
     }
 }
