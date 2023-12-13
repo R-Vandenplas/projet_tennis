@@ -14,14 +14,13 @@ public class Match {
     private Opponent team1;
     private Opponent team2;
     private Schedule schedule;
+    private Opponent winner;
     
 
     private List<Set> sets;
 
-    public Match(DateTime date, TimeSpan duration, int round, Referee referee, Court court, Opponent team1, Opponent team2, Schedule schedule)
+    public Match(int round, Referee referee, Court court, Opponent team1, Opponent team2, Schedule schedule)
     {
-        this.date = date;
-        this.duration = duration;
         this.round = round;
         this.referee = referee;
         this.court = court;
@@ -32,31 +31,44 @@ public class Match {
     }
 
     public Opponent GetWinner() {
-
-        
+        return this.winner;
     }
 
     public void Play() {
-
+        int winner = 0;
         switch(schedule.GetScheduleType())
         {
+            
             case ScheduleType.LadiesDouble:
-                PlayDouble();
+                winner =PlayDouble();
                 break;
             case ScheduleType.LadiesSingle:
-                PlayLadiesSingle();
+                winner =PlayLadiesSingle();
                 break;
             case ScheduleType.GentlemenDouble:
-                PlayDouble();
+                winner =PlayDouble();
                 break;
             case ScheduleType.GentlemenSingle:
-                PlayGentlemenSingle();
+                winner =PlayGentlemenSingle();
                 break;
             case ScheduleType.MixedDouble:
-                PlayDouble();
+                winner =PlayDouble();
                 break;
 
         }
+        if(winner == 1)
+        {
+            this.winner = team1;
+        }
+        else if(winner == 2)
+        {
+            this.winner = team2;
+        }
+        else
+        {
+            throw new Exception("Play error");
+        }
+
     }
 
     private int PlayDouble()
