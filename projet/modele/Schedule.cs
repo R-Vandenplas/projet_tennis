@@ -13,35 +13,33 @@ public class Schedule {
 
     private int actualRound;
     private Tournament tournament;
-    private Queue<Opponent> opponentsW;
+    private Queue<Opponent> opponents;
     public ScheduleType GetScheduleType()
     {
         return Type;
     }
 
-    public Schedule(ScheduleType type, Tournament tournament)
+    public Schedule(ScheduleType type, Tournament tournament,Queue<Opponent> opponents)
     {
         Type = type;
         this.actualRound = 0;
         this.tournament = tournament;
+        this.opponents = opponents;
     }
 
-    public void NbWinningSets() {
-        // TODO implement here
-    }
 
     public void PlayNextRound() {
         for (int i = 0; i <(64/2^actualRound); i++)
         {
-            Opponent opponent1 = opponentsW.Dequeue();
-            Opponent opponent2 = opponentsW.Dequeue();
+            Opponent opponent1 = opponents.Dequeue();
+            Opponent opponent2 = opponents.Dequeue();
             Referee referee = Referee.Available();
             Court court = Court.Available();
             Match match = new Match(actualRound,referee,court,opponent1, opponent2,this);
             match.Play();
             referee.Release();
             court.Release();
-            opponentsW.Enqueue(match.GetWinner());
+            opponents.Enqueue(match.GetWinner());
         }
 
     }
@@ -50,9 +48,9 @@ public class Schedule {
 
 
     public Opponent GetWinner() {
-        if(opponentsW.Count == 1)
+        if(opponents.Count == 1)
         {
-            return opponentsW.Dequeue();
+            return opponents.Dequeue();
         }
         else
         {
