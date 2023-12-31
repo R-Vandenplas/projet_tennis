@@ -7,28 +7,65 @@ using System.Linq;
 using System.Text;
 
 public class Set {
+    public int idSet;
     private int scoreOp1;
     private int scoreOp2;
+
+    private Match match;
     public bool LastSet;
-    public Set( bool isLastSet) {
+
+    public int IdSet
+    {
+        get
+        {
+            return idSet;
+        }
+        set
+        {
+            idSet = value;
+        }
+    }
+    public int ScoreOp1
+    {
+        get
+        {
+            return scoreOp1;
+        }
+    }
+    public int ScoreOp2
+    {
+        get
+        {
+            return scoreOp2;
+        }
+    }
+    public Match Match
+    {
+        get
+        {
+            return match;
+        }
+    }
+    public Set( Match match ,bool isLastSet) {
+        this.match = match;
         scoreOp1= 0;
         scoreOp2= 0;
         LastSet = isLastSet; 
     }
-    public Set()
+    public Set(Match match)
     {
+        this.match = match;
         scoreOp1 = 0;
         scoreOp2 = 0;
         LastSet = false;
     }
-    public int ScoreOp1 { get => scoreOp1;}
-    public int ScoreOp2 { get => scoreOp2;}
+    
     
     Random rnd = new Random();
     public int Play() {
         do
         {
-            Game game = new Game();
+            Game game = new Game(this);
             int winner = game.Play();
             if( winner == 0)
             {
@@ -52,7 +89,9 @@ public class Set {
         }
         else if(scoreOp1 ==6 && scoreOp2 == 5)
         {
-            int winner = rnd.Next(0, 2);
+
+            Game game = new Game(this);
+            int winner = game.Play();
             if (winner == 0)
             {
                 scoreOp1++;
@@ -69,7 +108,8 @@ public class Set {
         }
         else if (scoreOp1 == 5 && scoreOp2 == 6)
         {
-            int winner = rnd.Next(0, 2);
+            Game game = new Game(this);
+            int winner = game.Play();
             if (winner == 0)
             {
                 scoreOp1++;
@@ -100,7 +140,7 @@ public class Set {
         }
         else if(scoreOp1 == 6 && scoreOp2 == 6 && LastSet)
         {
-            SuperTieBreak superTieBreak = new SuperTieBreak();
+            SuperTieBreak superTieBreak = new SuperTieBreak(this.match);
             int winner = superTieBreak.Play();
             if (winner == 0)
             {
@@ -124,6 +164,7 @@ public class Set {
         int scoreOp2 = 0;
         do
         {
+            this.Match.Duration += new TimeSpan(0, 0, 20);
             int winner = rnd.Next(0, 2);
             if (winner == 0)
             {
@@ -147,6 +188,7 @@ public class Set {
         }
         while(scoreOp1 > scoreOp2 + 1 && scoreOp2 > scoreOp1 + 1)
         {
+            this.Match.Duration += new TimeSpan(0, 0, 20);
             int winner = rnd.Next(0, 2);
             if (winner == 0)
             {

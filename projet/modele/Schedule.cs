@@ -1,48 +1,112 @@
 
+using DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 
 public class Schedule {
 
-    
-
-    private ScheduleType Type;
-
+    private ScheduleType type;
+    private int idSchedule;
     private int actualRound;
     private Tournament tournament;
     private Queue<Opponent> opponents;
-    public ScheduleType GetScheduleType()
+
+    private Opponent winner = null;
+    
+    DAO<Schedule> scheduleDAO = SQLFactory.GetScheduleDAO();
+
+    public int IdSchedule
     {
-        return Type;
+        get
+        {
+            return idSchedule;
+        }
+        set
+        {
+            idSchedule = value;
+        }
     }
+    public Tournament Tournament
+    {
+        get
+        {
+            return tournament;
+        }
+    }
+    public ScheduleType Type
+    {
+        get
+        {
+            return type;
+        }
+        
+    }
+    
 
     public Schedule(ScheduleType type, Tournament tournament,Queue<Opponent> opponents)
     {
-        Type = type;
-        this.actualRound = 0;
+        this.type = type;
+        this.actualRound = 1;
         this.tournament = tournament;
         this.opponents = opponents;
+        bool creation_verifications =  scheduleDAO.Create(this);
+        if (!creation_verifications)
+        {
+            throw new Exception("Schedule creation failed");
+        }
     }
 
 
     public void PlayNextRound() {
-        for (int i = 0; i <(64/2^actualRound); i++)
+        if (type < ScheduleType.GentlemenDouble)
         {
-            Opponent opponent1 = opponents.Dequeue();
-            Opponent opponent2 = opponents.Dequeue();
-            Referee referee = Referee.Available();
-            Court court = Court.Available();
-            Match match = new Match(actualRound,referee,court,opponent1, opponent2,this);
-            match.Play();
-            referee.Release();
-            court.Release();
-            opponents.Enqueue(match.GetWinner());
+            Console.WriteLine("debut d'un round simple");
+            for (int i = 0; i < (64 / ((int)Math.Pow(2,(actualRound - 1)))); i++)
+            {
+
+                Opponent opponent1 = opponents.Dequeue();
+                Opponent opponent2 = opponents.Dequeue();
+                Referee referee = Referee.Available();
+                Court court = Court.Available();
+                Match match = new Match(actualRound, referee, court, opponent1, opponent2, this);
+                match.Play();
+                Console.WriteLine($"fin d'un match n° {i}");
+
+                referee.Release();
+                court.Release();
+                opponents.Enqueue(match.Winner);
+            }
         }
+        else
+        {
+            Console.WriteLine("debut d'un round double");
+            for (int i = 0; i < (32 / ((int)Math.Pow(2, (actualRound - 1)))); i++)
+            {
+                Opponent opponent1 = opponents.Dequeue();
+                Opponent opponent2 = opponents.Dequeue();
+                Referee referee = Referee.Available();
+                Court court = Court.Available();
+                Match match = new Match(actualRound, referee, court, opponent1, opponent2, this);
+                match.Play();
+                Console.WriteLine($"fin d'un match n° {i}");
+
+                referee.Release();
+                court.Release();
+                opponents.Enqueue(match.Winner);
+            }
+        }
+        
+        Console.WriteLine($"fin du round : {actualRound}");
+        
+        actualRound++;
+        
 
     }
+   
 
     
 
@@ -50,12 +114,9 @@ public class Schedule {
     public Opponent GetWinner() {
         if(opponents.Count == 1)
         {
-            return opponents.Dequeue();
+            this.winner= opponents.Dequeue();
         }
-        else
-        {
-            return null;
-        }
+        return this.winner;
         
         
     }

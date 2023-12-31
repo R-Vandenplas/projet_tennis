@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAO;
+using projet.DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,22 +25,16 @@ namespace projet
         public MainWindow()
         {
             InitializeComponent();
-            for (int i = 0; i < 50; i++)
+
+            Tournament tournament = new Tournament(1, "Roland Garros");
+            tournament.Play();
+            foreach (Schedule schedule in tournament.Schedules)
             {
-                
-                Set set = new Set();
-                int winner = set.Play();
-                if (winner == 1)
-                {
-                    Console.WriteLine("Le joueur 1 a gagné");
-                    Console.WriteLine($"score du match : {set.ScoreOp1}  {set.ScoreOp2}");
-                }
-                else
-                {
-                    Console.WriteLine("Le joueur 2 a gagné");
-                    Console.WriteLine($"score du match : {set.ScoreOp2}  {set.ScoreOp1}");
-                }
+                Console.WriteLine(schedule.GetWinner().ToString());
             }
+
+
+
 
         }
     }

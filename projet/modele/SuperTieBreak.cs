@@ -8,17 +8,18 @@ using System.Text;
 public class SuperTieBreak : Set {
     int scoreOp1;
     int scoreOp2;
+    Match match;
     
-    public SuperTieBreak()
+    public SuperTieBreak(Match match):base(match)
     {
-        scoreOp1 = 0;
-        scoreOp2 = 0;
+        
     }
    
     Random rnd = new Random();
     public int Play() {
         do
         {
+            this.Match.Duration += new TimeSpan(0, 0, 20);
             int winner = rnd.Next(0, 2);
             if (winner == 0)
             {
@@ -42,6 +43,7 @@ public class SuperTieBreak : Set {
         }
         while (scoreOp1 > scoreOp2 + 1 && scoreOp1 < scoreOp2 + 1)
         {
+            this.Match.Duration += new TimeSpan(0, 0, 20);
             int winner = rnd.Next(0, 2);
             if (winner == 0)
             {
@@ -67,4 +69,3 @@ public class SuperTieBreak : Set {
 
 }
 
-}

@@ -6,14 +6,34 @@ using System.Text;
 
 public class Person {
 
-    
-
     private string firstname;
 
     private string lastname;
 
     private string nationality;
 
+    public string Firstname
+    {
+        get
+        {
+            return firstname;
+        }
+    }
+    
+    public string Lastname
+    {
+        get
+        {
+            return lastname;
+        }
+    }
+    public string Nationality
+    {
+        get
+        {
+            return nationality;
+        }
+    }
     public Person(string firstname, string lastname, string nationality)
     {
         this.firstname = firstname;
