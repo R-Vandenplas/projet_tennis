@@ -27,11 +27,13 @@ namespace projet
             InitializeComponent();
 
             Tournament tournament = new Tournament(1, "Roland Garros");
+            Console.WriteLine($"date debut : {DateTime.Now}");
             tournament.Play();
             foreach (Schedule schedule in tournament.Schedules)
             {
                 Console.WriteLine(schedule.GetWinner().ToString());
             }
+            Console.WriteLine($"date fin : {tournament.Date}");
 
 
 

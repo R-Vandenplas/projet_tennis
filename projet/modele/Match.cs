@@ -121,7 +121,7 @@ public class Match {
         this.team1 = team1;
         this.team2 = team2;
         this.schedule = schedule;
-        this.date = DateTime.Now;
+        this.date = court.Date;
         this.duration = new TimeSpan(0,0,0);
         this.sets = new List<Set>();
         

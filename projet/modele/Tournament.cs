@@ -15,6 +15,7 @@ public class Tournament {
     List<Player> playerMaleList = new List<Player>();
     List<Player> playerFemaleList = new List<Player>();
     List<Schedule> schedules = new List<Schedule>();
+    DateTime  date = DateTime.Now;
 
     public string Name
     {
@@ -44,7 +45,18 @@ public class Tournament {
             return schedules;
         }
     }
-    
+
+    public DateTime Date {
+        get
+        {
+            return date;
+        }
+        set
+        {
+            date = value;
+        }
+       }
+
     public void Play()
     {
         ChargePlayers();
@@ -56,16 +68,60 @@ public class Tournament {
         Schedule scheduleGentlemenSingle = new Schedule(ScheduleType.GentlemenSingle, this, GetOpponentsGentlemenSingle());
         Schedule scheduleMixedDouble = new Schedule(ScheduleType.MixedDouble, this, GetOpponentsMixedDouble());
         schedules.AddRange(new List<Schedule> { scheduleLadiesDouble, scheduleLadiesSingle, scheduleGentlemenDouble, scheduleGentlemenSingle, scheduleMixedDouble });
-        scheduleGentlemenSingle.PlayNextRound();
-        scheduleLadiesSingle.PlayNextRound();
-        while(scheduleLadiesSingle.GetWinner() == null)
+        
+        for (int i = 0; i < 6; i++)
         {
             scheduleLadiesDouble.PlayNextRound();
             scheduleMixedDouble.PlayNextRound();
             scheduleGentlemenDouble.PlayNextRound();
             scheduleGentlemenSingle.PlayNextRound();
             scheduleLadiesSingle.PlayNextRound();
+            this.date = Court.GetDateEndRound();
         }
+        scheduleGentlemenSingle.PlayNextRound();
+        scheduleLadiesSingle.PlayNextRound();
+        this.date = Court.GetDateEndRound();
+        
+
+    }
+    public void Play(ScheduleType scheduleType)
+    {
+        ChargePlayers();
+        Referee.ChargeReferees();
+        Court.ChargeCourts();
+        Schedule schedule = new Schedule(scheduleType, this, GetOpponents(scheduleType));
+        schedules.Add(schedule);
+        do
+        {
+            schedule.PlayNextRound();
+            this.date = Court.GetDateEndRound();
+
+        }while(schedule.GetWinner() == null);
+        
+
+    }
+    private Queue<Opponent> GetOpponents(ScheduleType scheduleType)
+    {
+        Queue<Opponent> opponents = new Queue<Opponent>();
+        switch (scheduleType)
+        {
+            case ScheduleType.LadiesDouble:
+                opponents = GetOpponentsLadiesDouble();
+                break;
+            case ScheduleType.LadiesSingle:
+                opponents = GetOpponentsLadiesSingle();
+                break;
+            case ScheduleType.GentlemenDouble:
+                opponents = GetOpponentsGentlemenDouble();
+                break;
+            case ScheduleType.GentlemenSingle:
+                opponents = GetOpponentsGentlemenSingle();
+                break;
+            case ScheduleType.MixedDouble:
+                opponents = GetOpponentsMixedDouble();
+                break;
+        }
+        return opponents;
     }
     private Queue<Opponent> GetOpponentsLadiesDouble()
     {

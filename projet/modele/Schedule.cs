@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 public class Schedule {
 
@@ -74,16 +75,14 @@ public class Schedule {
                 Court court = Court.Available();
                 Match match = new Match(actualRound, referee, court, opponent1, opponent2, this);
                 match.Play();
-                Console.WriteLine($"fin d'un match n° {i}");
-
                 referee.Release();
-                court.Release();
+                court.Release(match.Duration);
                 opponents.Enqueue(match.Winner);
             }
         }
         else
         {
-            Console.WriteLine("debut d'un round double");
+            Console.WriteLine("debut d'un round double");               
             for (int i = 0; i < (32 / ((int)Math.Pow(2, (actualRound - 1)))); i++)
             {
                 Opponent opponent1 = opponents.Dequeue();
@@ -92,10 +91,8 @@ public class Schedule {
                 Court court = Court.Available();
                 Match match = new Match(actualRound, referee, court, opponent1, opponent2, this);
                 match.Play();
-                Console.WriteLine($"fin d'un match n° {i}");
-
                 referee.Release();
-                court.Release();
+                court.Release(match.Duration);
                 opponents.Enqueue(match.Winner);
             }
         }
