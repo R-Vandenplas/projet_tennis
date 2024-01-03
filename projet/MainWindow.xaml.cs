@@ -26,7 +26,7 @@ namespace projet
         {
             InitializeComponent();
 
-            Tournament tournament = new Tournament(1, "Roland Garros");
+            /*Tournament tournament = new Tournament(1, "Roland Garros");
             Console.WriteLine($"date debut : {DateTime.Now}");
             tournament.Play();
             foreach (Schedule schedule in tournament.Schedules)
@@ -35,9 +35,28 @@ namespace projet
             }
             Console.WriteLine($"date fin : {tournament.Date}");
 
-
+            */
 
 
         }
+
+        private void LaunchTournament_Click(object sender, RoutedEventArgs e)
+        {
+            // Create and play the tournament
+            currentTournament = new Tournament(idTournament: 1, name: "Roland Garros");
+            currentTournament.Play();
+
+            // Clear the ListBox before adding winners
+            winnersListBox.Items.Clear();
+
+            // Display winners by schedule type
+            foreach (Schedule schedule in currentTournament.Schedules)
+            {
+                string winnerText = $"Winner for {schedule.ScheduleType}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
+                winnersListBox.Items.Add(winnerText);
+            }
+
+        }
+
     }
 }
