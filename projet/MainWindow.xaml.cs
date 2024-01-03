@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 
 namespace projet
@@ -29,19 +28,13 @@ namespace projet
 
             // Clear the ListBox before adding winners
             List<string> winnersListBox = new List<string>();
-            winnersListBox.Clear();
+            winnersListBox.Items.Clear();
 
             // Display winners by schedule type
             foreach (Schedule schedule in currentTournament.Schedules)
             {
-                string winnerText = $"Winner for {schedule}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
-                winnersListBox.Add(winnerText);
-            }
-
-            // Show winners in MessageBox
-            foreach (string winner in winnersListBox)
-            {
-                MessageBox.Show(winner);
+                string winnerText = $"Winner for {schedule.ScheduleType}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
+                winnersListBox.Items.Add(winnerText);
             }
         }
     }
