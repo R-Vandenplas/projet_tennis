@@ -15,6 +15,7 @@ public class Schedule {
     private int actualRound;
     private Tournament tournament;
     private Queue<Opponent> opponents;
+    private Stack<Opponent> opponentsStanding = new Stack<Opponent>();
 
     private Opponent winner = null;
     
@@ -78,6 +79,7 @@ public class Schedule {
                 referee.Release();
                 court.Release(match.Duration);
                 opponents.Enqueue(match.Winner);
+                opponentsStanding.Push(match.Loser);
             }
         }
         else

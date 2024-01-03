@@ -18,6 +18,7 @@ public class Match {
     private Opponent team2;
     private Schedule schedule;
     private Opponent winner;
+    private Opponent loser;
 
     public int IdMatch
     {
@@ -105,6 +106,14 @@ public class Match {
             return winner;
         }
     }
+    public Opponent Loser
+    {
+        get
+        {
+            return loser;
+        }
+    }
+
 
     private List<Set> sets;
 
@@ -152,10 +161,12 @@ public class Match {
         if(winner == 1)
         {
             this.winner = team1;
+            this.loser = team2;
         }
         else if(winner == 2)
         {
             this.winner = team2;
+            this.loser = team1;
         }
         else
         {

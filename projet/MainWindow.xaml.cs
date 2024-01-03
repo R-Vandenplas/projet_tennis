@@ -28,18 +28,18 @@ namespace projet
             currentTournament.Play();
 
             // Clear the ListBox before adding winners
-            List<string> winnersListBox = new List<string>;
-            winnersListBox.Items.Clear();
+            List<string> winnersListBox = new List<string>();
+            winnersListBox.Clear();
 
             // Display winners by schedule type
             foreach (Schedule schedule in currentTournament.Schedules)
             {
-                string winnerText = $"Winner for {schedule.ScheduleType}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
-                winnersListBox.Items.Add(winnerText);
+                string winnerText = $"Winner for {schedule}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
+                winnersListBox.Add(winnerText);
             }
 
             // Show winners in MessageBox
-            foreach (string winner in winnersListBox.Items)
+            foreach (string winner in winnersListBox)
             {
                 MessageBox.Show(winner);
             }

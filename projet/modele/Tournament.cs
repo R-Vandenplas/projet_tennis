@@ -32,8 +32,8 @@ public class Tournament {
         }
     }
 
-    public Tournament(int idtournament, string name) {
-        this.idTournament = idtournament;
+    public Tournament(int idTournament, string name) {
+        this.idTournament = idTournament;
         this.name = name;
 
         
