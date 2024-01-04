@@ -2,11 +2,13 @@
 using System.Windows;
 using projet.view;
 
-
 namespace projet
 {
     public partial class MainWindow : Window
     {
+        // Static property to store the current tournament instance
+        public static Tournament CurrentTournament { get; private set; } = new Tournament(1,"default");
+
         public MainWindow()
         {
             InitializeComponent();
@@ -25,14 +27,14 @@ namespace projet
             }
 
             // Create and play the tournament
-            Tournament currentTournament = new Tournament(idTournament: 1, name: tournamentName);
-            currentTournament.Play();
+            CurrentTournament = new Tournament(idTournament: 1, name: tournamentName);
+            CurrentTournament.Play();
 
             // ListBox before adding winners
             List<string> winnersListBox = new List<string>();
 
             // Display winners by schedule type
-            foreach (Schedule schedule in currentTournament.Schedules)
+            foreach (Schedule schedule in CurrentTournament.Schedules)
             {
                 string winnerText = $"Winner for {schedule.Type}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
                 winnersListBox.Add(winnerText);

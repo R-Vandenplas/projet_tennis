@@ -47,7 +47,24 @@ public class Schedule {
         }
         
     }
-    
+
+    public List<string> GetPlayerRankings()
+    {
+        List<string> playerRankings = new List<string>();
+
+        // Convert the stack to a list for easier processing
+        List<Opponent> opponentsList = opponentsStanding.ToList();
+
+        // Display player rankings
+        for (int i = 0; i < opponentsList.Count; i++)
+        {
+            playerRankings.Add($"Rank {i + 1}: {opponentsList[i].ToString()}");
+        }
+
+        return playerRankings;
+    }
+
+
 
     public Schedule(ScheduleType type, Tournament tournament,Queue<Opponent> opponents)
     {

@@ -8,10 +8,19 @@
         Title="Winners" Height="450" Width="800"
         Background="#27378a">
     <Grid>
-        <StackPanel VerticalAlignment="Center">
+        <StackPanel VerticalAlignment="Center" Background="Blue">
 
             <!-- Display Winners -->
-            <ListBox Name="winnersListBox" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="White"/>
+            <ListBox Name="winnersListBox" HorizontalAlignment="Center" Margin="0,20,0,0" Background="#27378a">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Winner}" Foreground="White" FontSize="16" FontWeight="Bold"/>
+                            <Button Content="Show Ranking" Click="ShowRanking_Click" Tag="{Binding ScheduleType}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
             <!-- Back to Main Window Button -->
             <Button Content="Go back" HorizontalAlignment="Center" Click="BackToMainWindow_Click"/>
