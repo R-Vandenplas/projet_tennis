@@ -5,7 +5,7 @@ namespace projet.view
 {
     public partial class PlayerRankingWindow : Window
     {
-        private ScheduleType scheduleType;
+        /*private ScheduleType scheduleType;
 
         public PlayerRankingWindow(ScheduleType scheduleType)
         {
@@ -48,6 +48,60 @@ namespace projet.view
             // Close the PlayerRankingWindow
             this.Close();
         }
-    }
+    }*/
 
+        private Tournament tournament;
+        private ScheduleType scheduleType;
+        private Schedule schedule;
+
+        
+
+        public PlayerRankingWindow(Tournament tournament, ScheduleType scheduleType)
+        {
+            InitializeComponent();
+            this.tournament = tournament;
+            this.scheduleType = scheduleType;
+
+            // Find the schedule of the specified type in the tournament
+            this.schedule = tournament.schedules.Find(s => s.Type == scheduleType);
+
+            // Display the schedule type and player rankings
+            DisplayRankings();
+        }
+
+        private void DisplayRankings()
+        {
+
+            scheduleTypeTextBlock.Text = $"Schedule Type: {scheduleType}";
+
+            // Get the standings for the schedule
+            var playerRankings = schedule.GetPlayerRankings();
+
+            rankingsListBox.ItemsSource = playerRankings;
+        }
+
+        private void BackToWinnersWindow_Click(object sender, RoutedEventArgs e)
+        {
+            // Close the PlayerRankingWindow
+            this.Close();
+        }
+
+
+        /* private List<string> GetPlayerRankings(ScheduleType scheduleType)
+         {
+             // Implement the logic to get player rankings based on the schedule type
+             // You may need to modify this method based on your data structure
+             List<string> playerRankings = new List<string>();
+
+             // Example: Iterate through players and create ranking strings
+             foreach (Player player in tournament.Players)
+             {
+                 string rankingText = $"Rank: {player.Rank}, Player: {player.ToString()}";
+                 playerRankings.Add(rankingText);
+             }
+
+             return playerRankings;
+         }*/
+
+    }
 }

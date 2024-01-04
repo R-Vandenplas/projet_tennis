@@ -9,48 +9,101 @@ namespace projet.view
 {
     public partial class WinnersWindow : Window
     {
-        private List<string> winnersList = new List<string>();
+        /* private List<string> winnersList = new List<string>();
 
-        public WinnersWindow()
+         public WinnersWindow()
+         {
+             InitializeComponent();
+         }
+
+         public WinnersWindow(List<string> winnersList)
+         {
+             InitializeComponent();
+             this.winnersList = winnersList;
+
+             // Display winners in the ListBox
+             foreach (string winner in winnersList)
+             {
+                 winnersListBox.Items.Add(winner);
+             }
+         }
+
+         private void BackToMainWindow_Click(object sender, RoutedEventArgs e)
+         {
+             // Close the WinnersWindow
+             this.Close();
+
+
+         }
+         private void ShowRanking_Click(object sender, RoutedEventArgs e)
+         {
+             // Get the selected schedule type from the button's Tag
+             if (sender is Button button && button.Tag is ScheduleType selectedScheduleType)
+             {
+                 // Open the PlayerRankingWindow for the selected schedule type
+                 PlayerRankingWindow playerRankingWindow = new PlayerRankingWindow(selectedScheduleType);
+                 playerRankingWindow.Show();
+             }
+             else
+             {
+                 // Handle the case where the button or its Tag is null or not of type ScheduleType
+                 MessageBox.Show("Invalid button or schedule type.");
+             }
+         }*/
+
+
+        private Tournament tournament;
+
+        public WinnersWindow(Tournament tournament)
         {
             InitializeComponent();
+            this.tournament = tournament;
+
+            // Display winners for each schedule type
+            DisplayWinners();
         }
 
-        public WinnersWindow(List<string> winnersList)
+        private void DisplayWinners()
         {
-            InitializeComponent();
-            this.winnersList = winnersList;
-
-            // Display winners in the ListBox
-            foreach (string winner in winnersList)
+            foreach (Schedule schedule in tournament.Schedules)
             {
-                winnersListBox.Items.Add(winner);
+                // Get the winner for the current schedule
+                Opponent winner = schedule.GetWinner();
+
+                // Create a WinnerInfo object to store the winner text and schedule type
+                WinnerInfo winnerInfo = new WinnerInfo
+                {
+                    WinnerText = $"Winner for {schedule.Type}: {winner?.ToString() ?? "No Winner"}",
+                    ScheduleType = schedule.Type
+                };
+
+                // Add the WinnerInfo object to the ListBox
+                winnersListBox.Items.Add(winnerInfo);
             }
         }
 
-        private void BackToMainWindow_Click(object sender, RoutedEventArgs e)
+        private void ShowRankingButton_Click(object sender, RoutedEventArgs e)
         {
-            // Close the WinnersWindow
-            this.Close();
+            // Handle the "Show Ranking" button click
+            Button clickedButton = (Button)sender;
 
-
-        }
-        private void ShowRanking_Click(object sender, RoutedEventArgs e)
-        {
-            // Get the selected schedule type from the button's Tag
-            if (sender is Button button && button.Tag is ScheduleType selectedScheduleType)
+            // Extract the WinnerInfo object from the button's tag
+            if (clickedButton.Tag is WinnerInfo winnerInfo)
             {
-                // Open the PlayerRankingWindow for the selected schedule type
-                PlayerRankingWindow playerRankingWindow = new PlayerRankingWindow(selectedScheduleType);
-                playerRankingWindow.Show();
+                // Access the schedule type from the WinnerInfo object
+                ScheduleType scheduleType = winnerInfo.ScheduleType;
+
+                // Navigate to the RankingWindow and pass the schedule type
+                RankingWindow rankingWindow = new RankingWindow(tournament, scheduleType);
+                rankingWindow.Show();
+                this.Close();
             }
             else
             {
-                // Handle the case where the button or its Tag is null or not of type ScheduleType
-                MessageBox.Show("Invalid button or schedule type.");
+                // Handle the case where the button's tag is not of type WinnerInfo
+                MessageBox.Show("Invalid button tag.");
             }
         }
-
 
     }
 }
