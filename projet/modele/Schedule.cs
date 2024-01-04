@@ -66,7 +66,7 @@ public class Schedule {
     public void PlayNextRound() {
         if (type < ScheduleType.GentlemenDouble)
         {
-            Console.WriteLine("debut d'un round simple");
+           
             for (int i = 0; i < (64 / ((int)Math.Pow(2,(actualRound - 1)))); i++)
             {
 
@@ -84,7 +84,7 @@ public class Schedule {
         }
         else
         {
-            Console.WriteLine("debut d'un round double");               
+                         
             for (int i = 0; i < (32 / ((int)Math.Pow(2, (actualRound - 1)))); i++)
             {
                 Opponent opponent1 = opponents.Dequeue();
@@ -99,7 +99,7 @@ public class Schedule {
             }
         }
         
-        Console.WriteLine($"fin du round : {actualRound}");
+        
         
         actualRound++;
         

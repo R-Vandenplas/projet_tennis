@@ -35,7 +35,7 @@ namespace projet
                 string winnerText = $"Winner for {schedule.Type}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
                 winnersListBox.Add(winnerText);
             }
-
+            MessageBox.Show(currentTournament.Name);
             // Show winners in MessageBox
             foreach (string winner in winnersListBox)
             {
