@@ -5,7 +5,14 @@ namespace projet.view
 {
     public partial class WinnersWindow : Window
     {
-        private List<string> winnersList;
+
+        private List<string> winnersList = new List<string>();
+
+        public WinnersWindow()
+        {
+            InitializeComponent();
+        }
+
 
         public WinnersWindow(List<string> winnersList)
         {
