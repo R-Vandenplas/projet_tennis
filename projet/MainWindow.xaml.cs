@@ -30,15 +30,26 @@ namespace projet
             CurrentTournament = new Tournament(idTournament: 1, name: tournamentName);
             CurrentTournament.Play();
 
-            // ListBox before adding winners
-            List<string> winnersListBox = new List<string>();
+             // ListBox before adding winners
+             List<string> winnersListBox = new List<string>();
+
+             // Display winners by schedule type
+             foreach (Schedule schedule in CurrentTournament.Schedules)
+             {
+                 string winnerText = $"Winner for {schedule.Type}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
+                 winnersListBox.Add(winnerText);
+             }
+
+           /* // ListBox before adding winners
+            List<(ScheduleType ScheduleType, string WinnerText)> winnersListBox = new List<(ScheduleType, string)>();
 
             // Display winners by schedule type
             foreach (Schedule schedule in CurrentTournament.Schedules)
             {
-                string winnerText = $"Winner for {schedule.Type}: {schedule.GetWinner()?.ToString() ?? "No Winner"}";
-                winnersListBox.Add(winnerText);
-            }
+                string winnerText = $"{schedule.GetWinner()?.ToString() ?? "No Winner"}";
+                winnersListBox.Add((schedule.Type, winnerText));
+            }*/
+
 
             // Show winners in WinnersWindow
             WinnersWindow winnersWindow = new WinnersWindow(winnersListBox);

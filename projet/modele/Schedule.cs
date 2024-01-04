@@ -124,8 +124,6 @@ public class Schedule {
     }
    
 
-    
-
 
     public Opponent GetWinner() {
         if(opponents.Count == 1)
