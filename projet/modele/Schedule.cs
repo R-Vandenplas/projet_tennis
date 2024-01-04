@@ -113,6 +113,7 @@ public class Schedule {
                 referee.Release();
                 court.Release(match.Duration);
                 opponents.Enqueue(match.Winner);
+                opponentsStanding.Push(match.Loser);
             }
         }
         
@@ -129,6 +130,7 @@ public class Schedule {
         if(opponents.Count == 1)
         {
             this.winner= opponents.Dequeue();
+            opponentsStanding.Push(winner);
         }
         return this.winner;
         

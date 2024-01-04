@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System;
 using System.Windows.Controls;
-
-
+using projet.modele;
 
 namespace projet.view
 {
@@ -28,10 +27,7 @@ namespace projet.view
              }
          }
 
-         private void BackToMainWindow_Click(object sender, RoutedEventArgs e)
-         {
-             // Close the WinnersWindow
-             this.Close();
+         
 
 
          }
@@ -53,6 +49,12 @@ namespace projet.view
 
 
         private Tournament tournament;
+        private void BackToMainWindow_Click(object sender, RoutedEventArgs e)
+        {
+            // Close the WinnersWindow
+            this.Close();
+
+        }
 
         public WinnersWindow(Tournament tournament)
         {
@@ -88,13 +90,13 @@ namespace projet.view
             Button clickedButton = (Button)sender;
 
             // Extract the WinnerInfo object from the button's tag
-            if (clickedButton.Tag is WinnerInfo winnerInfo)
+            if (clickedButton.Tag is ScheduleType scheduleType1)
             {
                 // Access the schedule type from the WinnerInfo object
-                ScheduleType scheduleType = winnerInfo.ScheduleType;
+                ScheduleType scheduleType = scheduleType1;
 
                 // Navigate to the RankingWindow and pass the schedule type
-                RankingWindow rankingWindow = new RankingWindow(tournament, scheduleType);
+                PlayerRankingWindow rankingWindow = new PlayerRankingWindow(tournament, scheduleType);
                 rankingWindow.Show();
                 this.Close();
             }
@@ -104,7 +106,6 @@ namespace projet.view
                 MessageBox.Show("Invalid button tag.");
             }
         }
-
-    }
+    } 
 }
 

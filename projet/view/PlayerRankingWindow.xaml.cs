@@ -63,7 +63,7 @@ namespace projet.view
             this.scheduleType = scheduleType;
 
             // Find the schedule of the specified type in the tournament
-            this.schedule = tournament.schedules.Find(s => s.Type == scheduleType);
+            this.schedule = tournament.Schedules.Find(s => s.Type == scheduleType);
 
             // Display the schedule type and player rankings
             DisplayRankings();
