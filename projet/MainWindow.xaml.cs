@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using projet.view;
+
 
 namespace projet
 {
@@ -36,11 +38,9 @@ namespace projet
                 winnersListBox.Add(winnerText);
             }
 
-            // Show winners in MessageBox
-            foreach (string winner in winnersListBox)
-            {
-                MessageBox.Show(winner);
-            }
+            // Show winners in WinnersWindow
+            WinnersWindow winnersWindow = new WinnersWindow(winnersListBox);
+            winnersWindow.Show();
         }
     }
 }

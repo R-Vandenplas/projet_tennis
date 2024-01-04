@@ -20,8 +20,6 @@
 			<!-- Launch Tournament Button -->
 			<Button Content="Launch Tournament" HorizontalAlignment="Center" Click="LaunchTournament_Click"/>
 
-			<!-- Winners ListBox -->
-			<ListBox Name="winnersListBox" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="White"/>
 		</StackPanel>
 	</Grid>
 </Window>
