@@ -82,7 +82,8 @@ namespace projet.view
 
         private void BackToWinnersWindow_Click(object sender, RoutedEventArgs e)
         {
-            // Close the PlayerRankingWindow
+            WinnersWindow winnersWindow = new WinnersWindow(tournament);
+            winnersWindow.Show();
             this.Close();
         }
 

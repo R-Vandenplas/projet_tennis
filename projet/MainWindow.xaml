@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projet"
         mc:Ignorable="d"
-        Title="Grand Slam Tournament" Height="450" Width="800"
+        Title="Grand Slam Tournament" Height="800" Width="1200"
         Background="#27378a">
 	<Grid>
 		<StackPanel VerticalAlignment="Center">

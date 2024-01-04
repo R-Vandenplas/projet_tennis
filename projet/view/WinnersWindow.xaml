@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projet"
         mc:Ignorable="d"
-        Title="Winners" Height="450" Width="800"
+        Title="Winners" Height="800" Width="1200"
         Background="#27378a">
     <Grid>
         <!-- Display Winners -->
@@ -22,6 +22,6 @@
         </ListBox>
 
         <!-- Back to Main Window Button -->
-        <Button Content="Go back" HorizontalAlignment="Center" Click="BackToMainWindow_Click"/>
+        <Button Content="Go back" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Click="BackToMainWindow_Click"/>
     </Grid>
 </Window>
