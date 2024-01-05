@@ -8,16 +8,22 @@
         Title="Winners" Height="800" Width="1200"
         Background="#27378a">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Start Date -->
+            <RowDefinition Height="Auto"/> <!-- End Date -->
+            <RowDefinition Height="*"/>    <!-- Winners -->
+            <RowDefinition Height="Auto"/> <!-- Back to Main Window Button -->
+        </Grid>
 
-         <!-- Display Start Date -->
+        <!-- Start Date -->
         <TextBlock Text="{Binding StartDate}" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,10,0,0" HorizontalAlignment="Center"/>
 
-        <!-- Display End Date -->
-        <TextBlock Text="{Binding EndDate}" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+        <!-- End Date -->
+        <TextBlock Text="{Binding EndDate}" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,5,0,0" HorizontalAlignment="Center" Grid.Row="1"/>
 
-        <!-- Display Winners -->
+        <!-- Winners -->
         <ListBox Name="winnersListBox" HorizontalAlignment="Center" Margin="0,20,0,0" Background="#27378a"
-                 ItemsSource="{Binding Winners}">
+                 ItemsSource="{Binding Winners}" Grid.Row="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -29,6 +35,6 @@
         </ListBox>
 
         <!-- Back to Main Window Button -->
-        <Button Content="Go back" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Click="BackToMainWindow_Click"/>
+        <Button Content="Go back" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Click="BackToMainWindow_Click" Grid.Row="3"/>
     </Grid>
 </Window>
