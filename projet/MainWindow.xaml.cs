@@ -46,6 +46,7 @@ namespace projet
            /* WinnersWindow winnersWindow = new WinnersWindow(winnersListBox);*/
             WinnersWindow winnersWindow = new WinnersWindow(CurrentTournament);
             winnersWindow.Show();
+            this.Close();
         }
 
        /* private void LaunchTournament_Click(object sender, RoutedEventArgs e)

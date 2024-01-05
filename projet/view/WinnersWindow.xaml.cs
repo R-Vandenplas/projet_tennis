@@ -52,6 +52,8 @@ namespace projet.view
         private void BackToMainWindow_Click(object sender, RoutedEventArgs e)
         {
             // Close the WinnersWindow
+           MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
 
         }
