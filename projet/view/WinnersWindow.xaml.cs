@@ -8,60 +8,21 @@ namespace projet.view
 {
     public partial class WinnersWindow : Window
     {
-        /* private List<string> winnersList = new List<string>();
-
-         public WinnersWindow()
-         {
-             InitializeComponent();
-         }
-
-         public WinnersWindow(List<string> winnersList)
-         {
-             InitializeComponent();
-             this.winnersList = winnersList;
-
-             // Display winners in the ListBox
-             foreach (string winner in winnersList)
-             {
-                 winnersListBox.Items.Add(winner);
-             }
-         }
-
-         
-
-
-         }
-         private void ShowRanking_Click(object sender, RoutedEventArgs e)
-         {
-             // Get the selected schedule type from the button's Tag
-             if (sender is Button button && button.Tag is ScheduleType selectedScheduleType)
-             {
-                 // Open the PlayerRankingWindow for the selected schedule type
-                 PlayerRankingWindow playerRankingWindow = new PlayerRankingWindow(selectedScheduleType);
-                 playerRankingWindow.Show();
-             }
-             else
-             {
-                 // Handle the case where the button or its Tag is null or not of type ScheduleType
-                 MessageBox.Show("Invalid button or schedule type.");
-             }
-         }*/
-
-
+       
         private Tournament tournament;
-        private void BackToMainWindow_Click(object sender, RoutedEventArgs e)
-        {
-            // Close the WinnersWindow
-           MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Close();
 
-        }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+
 
         public WinnersWindow(Tournament tournament)
         {
             InitializeComponent();
             this.tournament = tournament;
+
+            // Set StartDate and EndDate properties
+            StartDate = $"Start Date: {DateTime.Now.ToString("dd/MM/yyyy")}";
+            EndDate = $"End Date: {Court.GetDateEndRound().ToString("dd/MM/yyyy")}";
 
             // Display winners for each schedule type
             DisplayWinners();
@@ -84,6 +45,15 @@ namespace projet.view
                 // Add the WinnerInfo object to the ListBox
                 winnersListBox.Items.Add(winnerInfo);
             }
+        }
+
+        private void BackToMainWindow_Click(object sender, RoutedEventArgs e)
+        {
+            // Close the WinnersWindow
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+
         }
 
         private void ShowRankingButton_Click(object sender, RoutedEventArgs e)

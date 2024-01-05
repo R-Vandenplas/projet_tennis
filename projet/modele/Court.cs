@@ -79,6 +79,8 @@ public class Court {
         }
         courts.Enqueue(this);
     }
+
+
     public string ToString()
     {
         return "Court " + nbSpectators + " " + covered + " " + tournament;
