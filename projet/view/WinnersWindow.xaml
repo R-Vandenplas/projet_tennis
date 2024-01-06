@@ -13,9 +13,9 @@
             <RowDefinition Height="Auto"/> <!-- End Date -->
             <RowDefinition Height="*"/>    <!-- Winners -->
             <RowDefinition Height="Auto"/> <!-- Back to Main Window Button -->
-        </Grid>
+         </Grid.RowDefinitions>
 
-        <!-- Start Date -->
+                <!-- Start Date -->
         <TextBlock Text="{Binding StartDate}" Foreground="White" FontSize="16" FontWeight="Bold" Margin="0,10,0,0" HorizontalAlignment="Center"/>
 
         <!-- End Date -->
