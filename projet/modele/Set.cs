@@ -106,20 +106,6 @@ public class Set {
         {
             return 2;
         }
-        else if (scoreOp1 == 5 && scoreOp2 == 6)
-        {
-            Game game = new Game(this);
-            int winner = game.Play();
-            if (winner == 0)
-            {
-                scoreOp1++;
-            }
-            else
-            {
-                scoreOp2++;
-                return 2;
-            }
-        }
 
         if (scoreOp1 == 6 && scoreOp2 == 6 && !LastSet)
         {
