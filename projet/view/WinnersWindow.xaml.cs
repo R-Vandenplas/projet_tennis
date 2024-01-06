@@ -22,7 +22,7 @@ namespace projet.view
 
             // Set StartDate and EndDate properties
             StartDate = $"Start Date: {DateTime.Now.ToString("dd/MM/yyyy")}";
-            EndDate = $"End Date: {Court.GetDateEndRound().ToString("dd/MM/yyyy")}";
+            EndDate = $"End Date: {tournament.Date.ToString("dd/MM/yyyy")}";
 
             // Display winners for each schedule type
             DisplayWinners();
