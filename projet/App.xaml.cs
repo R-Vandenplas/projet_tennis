@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAO;
+using projet.DAO;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,6 @@ namespace projet
     /// </summary>
     public partial class App : Application
     {
+       
     }
 }

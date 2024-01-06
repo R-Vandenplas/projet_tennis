@@ -1,45 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using projet.view;
 
 namespace projet
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        // Static property to store the current tournament instance
+        public static Tournament CurrentTournament { get; private set; } = new Tournament(1,"default");
+
         public MainWindow()
         {
             InitializeComponent();
-            for (int i = 0; i < 50; i++)
+        }
+
+        private void LaunchTournament_Click(object sender, RoutedEventArgs e)
+        {
+            // Get tournament name from TextBox
+            string tournamentName = tournamentNameTextBox.Text;
+
+            // Validate if tournament name is entered
+            if (string.IsNullOrWhiteSpace(tournamentName))
             {
-                
-                Set set = new Set();
-                int winner = set.Play();
-                if (winner == 1)
-                {
-                    Console.WriteLine("Le joueur 1 a gagné");
-                    Console.WriteLine($"score du match : {set.ScoreOp1}  {set.ScoreOp2}");
-                }
-                else
-                {
-                    Console.WriteLine("Le joueur 2 a gagné");
-                    Console.WriteLine($"score du match : {set.ScoreOp2}  {set.ScoreOp1}");
-                }
+                MessageBox.Show("Please enter a valid tournament name.");
+                return;
             }
 
+            // Create and play the tournament
+            CurrentTournament = new Tournament(idTournament: 1, name: tournamentName);
+            CurrentTournament.Play();
+
+
+            // Show winners in WinnersWindow
+            WinnersWindow winnersWindow = new WinnersWindow(CurrentTournament);
+            winnersWindow.Show();
+            this.Close();
         }
+
     }
 }

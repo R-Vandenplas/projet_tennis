@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Grand Slam Tournament" Height="800" Width="1200"
+        Background="#27378a">
+	<Grid>
+		<StackPanel VerticalAlignment="Center">
 
-    </Grid>
+			<!-- Welcome Text -->
+			<TextBlock Text="Welcome to the Grand Slam Tournament" HorizontalAlignment="Center" Margin="0,0,0,20" Foreground="White"/>
+
+			<!-- Tournament Name Input -->
+			<TextBlock Text="Please, enter the name of the tournament" HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="White"/>
+			<TextBox Name="tournamentNameTextBox" Width="200" HorizontalAlignment="Center" Margin="0,0,0,10" />
+
+			<!-- Launch Tournament Button -->
+			<Button Content="Launch Tournament" HorizontalAlignment="Center" Click="LaunchTournament_Click"/>
+
+		</StackPanel>
+	</Grid>
 </Window>
