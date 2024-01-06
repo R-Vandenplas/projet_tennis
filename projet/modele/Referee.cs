@@ -11,7 +11,7 @@ public class Referee : Person {
     public static Queue<Referee> referees= new Queue<Referee>();
     
 
-
+    // <------ getters and setters ------>
     public int IdReferee
     {
         get
@@ -24,14 +24,15 @@ public class Referee : Person {
         }
     }
     
-    
-
+    // <------ constructors ------>
     public Referee(int idReferee,string firstname, string lastname, string nationality) : base(firstname, lastname, nationality)
     {
         this.idReferee = idReferee;
         this.available = true;
     }
 
+    // <------ methods ------>
+    // the function returns a referee if there is one available
     public static Referee Available() {
         if(referees.Count > 0)
         {
@@ -44,10 +45,11 @@ public class Referee : Person {
        
     }
 
+    // the method returns the referee to the queue of available referees
     public void Release() {
        referees.Enqueue(this);
     }
-    
+    // the method charges referees from the database
     public static void ChargeReferees()
     {
         DAO<Referee> dao = SQLFactory.GetRefereeDAO();

@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 
 public class Player : Person {
+    
     private int idPlayer;
     private int rank;
     private string gender;
     
+    // <-----getters and setters----->
     public int IdPlayer
     {
         get
@@ -35,6 +37,7 @@ public class Player : Person {
         }
     }
 
+    // <-----constructors----->
     public Player(int idPlayer, string firstname, string lastname, string nationality,int rank,string gender) : base(firstname, lastname, nationality)
     {
         this.idPlayer = idPlayer;
@@ -42,6 +45,7 @@ public class Player : Person {
         this.gender = gender;
     }
 
+    // <-----methods----->
     public override string ToString()
     {
         return $"{Firstname} {Lastname} from {Nationality}";

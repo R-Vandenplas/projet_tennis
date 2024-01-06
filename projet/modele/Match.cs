@@ -20,6 +20,12 @@ public class Match {
     private Opponent winner;
     private Opponent loser;
 
+    private List<Set> sets;
+
+    DAO<Match> matchDAO = SQLFactory.GetMatchDAO();
+    DAO<Set> setDAO = SQLFactory.GetSetDAO();
+
+    //<------- getters and setters --------->
     public int IdMatch
     {
         get
@@ -114,14 +120,7 @@ public class Match {
         }
     }
 
-
-    private List<Set> sets;
-
-    DAO<Match> matchDAO = SQLFactory.GetMatchDAO();
-    DAO<Set> setDAO = SQLFactory.GetSetDAO();
-
-    
-
+    //<------- constructors --------->
     public Match(int round, Referee referee, Court court, Opponent team1, Opponent team2, Schedule schedule)
     {
         this.round = round;
@@ -138,6 +137,7 @@ public class Match {
 
     public void Play() {
         int winner = 0;
+        // launch the right play method depending on the schedule type
         switch(schedule.Type)
         {
             
@@ -158,6 +158,7 @@ public class Match {
                 break;
 
         }
+        // set winner and loser
         if(winner == 1)
         {
             this.winner = team1;
@@ -172,13 +173,13 @@ public class Match {
         {
             throw new Exception("Play error");
         }
+        // add match to database
         bool creation_verification = matchDAO.Create(this);
-        
-        
         if (!creation_verification)
         {
             throw new Exception("Match creation failed");
         }
+        // add sets to database
         foreach (Set set in sets)
         {
             creation_verification = setDAO.Create(set);
@@ -196,10 +197,10 @@ public class Match {
     {
         int setWinTeam1 = 0;
         int setWinTeam2 = 0;
+        // play 2 sets
         for (int i = 0; i < 2; i++)
         {
             Set set = new Set(this);
-            sets.Add(set);
             int winner = set.Play();
             sets.Add(set);
             if (winner == 1)
@@ -211,6 +212,7 @@ public class Match {
                 setWinTeam2++;
             }
         } 
+        // play super tie break if 1 set each
         if (setWinTeam1 == setWinTeam2)
         {
             SuperTieBreak superTieBreak = new SuperTieBreak(this);
@@ -226,6 +228,7 @@ public class Match {
                 setWinTeam2++;
             }
         }
+        // return winner
         if(setWinTeam1 == 2)
         {
             return 1;
@@ -244,11 +247,11 @@ public class Match {
     {
         int setWinTeam1 = 0;
         int setWinTeam2 = 0;
+        // play 2 sets
         for (int i = 0; i < 2; i++)
         {
             
             Set set = new Set(this);
-            sets.Add(set);
             int winner = set.Play();
             sets.Add(set);
             if (winner == 1)
@@ -260,7 +263,7 @@ public class Match {
                 setWinTeam2++;
             }
         }
-
+        // if 1 set each play the last set where the tie break is a super tie break 
         if (setWinTeam1 == setWinTeam2)
         {
             Set set = new Set(this,true);
@@ -276,14 +279,13 @@ public class Match {
                 setWinTeam2++;
             }
         }
+        // return winner
         if (setWinTeam1 == 2)
         {
-            
             return 1;
         }
         else if (setWinTeam2 == 2)
         {
-           
             return 2;
         }
         else
@@ -296,11 +298,11 @@ public class Match {
     {
         int setWinTeam1 = 0;
         int setWinTeam2 = 0;
+        // play sets until one team has 3 sets or 2 sets each
         do
         {
            
             Set set = new Set(this);
-            sets.Add(set);
             int winner = set.Play();
             sets.Add(set);
             if (winner == 1)
@@ -311,7 +313,8 @@ public class Match {
             {
                 setWinTeam2++;
             }
-        } while (!((setWinTeam1 == 3 && setWinTeam2 < 2) || (setWinTeam1 < 2 && setWinTeam2 == 3) || (setWinTeam1 == 2 && setWinTeam2 == 2)));
+        } while (!((setWinTeam1 == 3 ) || (setWinTeam2 == 3) || (setWinTeam1 == 2 && setWinTeam2 == 2)));
+        // if 2 sets each play the last set where the tie break is a super tie break
         if (setWinTeam1 == setWinTeam2)
         {
             Set set = new Set(this, true);
@@ -327,6 +330,7 @@ public class Match {
                 setWinTeam2++;
             }
         }
+        // return winner
         if (setWinTeam1 == 3)
         {
             return 1;

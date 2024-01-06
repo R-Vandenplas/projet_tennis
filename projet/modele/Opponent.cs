@@ -11,8 +11,9 @@ public class Opponent {
     private Player player1;
     private Player? player2;
 
-    
     DAO<Opponent> opponentDAO = SQLFactory.GetOpponentDAO();
+
+    // <------ getters and setters ------>
     public Player Player1 
     {
         get
@@ -39,9 +40,8 @@ public class Opponent {
         }
     }
 
-    
-
-
+    // <------ constructors ------>
+    //constructor for a single player
     public Opponent(Player player1)
     {
         this.player1 = player1;
@@ -52,6 +52,7 @@ public class Opponent {
             throw new Exception("Opponent creation failed");
         }
     }
+    //constructor for a double
     public Opponent(Player player1, Player? player2)
     {
         this.player1 = player1;
@@ -62,6 +63,7 @@ public class Opponent {
             throw new Exception("Opponent creation failed");
         }
     }
+    // <------ methods ------>
     public override string ToString()
     {
         if(player2 == null)

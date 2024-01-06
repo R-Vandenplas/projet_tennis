@@ -17,6 +17,7 @@ public class Tournament {
     List<Schedule> schedules = new List<Schedule>();
     DateTime  date = DateTime.Now;
 
+    //<------ getters and setters ------>
     public string Name
     {
         get
@@ -32,12 +33,6 @@ public class Tournament {
         }
     }
 
-    public Tournament(int idTournament, string name) {
-        this.idTournament = idTournament;
-        this.name = name;
-
-        
-    }
     public List<Schedule> Schedules
     {
         get
@@ -46,7 +41,8 @@ public class Tournament {
         }
     }
 
-    public DateTime Date {
+    public DateTime Date
+    {
         get
         {
             return date;
@@ -55,20 +51,32 @@ public class Tournament {
         {
             date = value;
         }
-       }
+    }
 
+    //<------ constructors ------>
+    public Tournament(int idTournament, string name) {
+        this.idTournament = idTournament;
+        this.name = name;
+
+        
+    }
+    
+    //<------ methods ------>
+
+    //play all the tournament
     public void Play()
     {
-        ChargePlayers();
-        Referee.ChargeReferees();
-        Court.ChargeCourts();
+        ChargePlayers();//charge players from database
+        Referee.ChargeReferees();//charge referees from database
+        Court.ChargeCourts();//charge courts from database
+        //create schedules with their opponents
         Schedule scheduleLadiesDouble = new Schedule(ScheduleType.LadiesDouble, this,GetOpponentsLadiesDouble());
         Schedule scheduleLadiesSingle = new Schedule(ScheduleType.LadiesSingle, this,GetOpponentsLadiesSingle());
         Schedule scheduleGentlemenDouble = new Schedule(ScheduleType.GentlemenDouble, this,GetOpponentsGentlemenDouble());
         Schedule scheduleGentlemenSingle = new Schedule(ScheduleType.GentlemenSingle, this, GetOpponentsGentlemenSingle());
         Schedule scheduleMixedDouble = new Schedule(ScheduleType.MixedDouble, this, GetOpponentsMixedDouble());
         schedules.AddRange(new List<Schedule> { scheduleLadiesDouble, scheduleLadiesSingle, scheduleGentlemenDouble, scheduleGentlemenSingle, scheduleMixedDouble });
-        
+        //play all the rounds
         for (int i = 0; i < 6; i++)
         {
             scheduleLadiesDouble.PlayNextRound();
@@ -78,12 +86,14 @@ public class Tournament {
             scheduleLadiesSingle.PlayNextRound();
             this.date = Court.GetDateEndRound();
         }
+        //play the last round of singles schedules because they have one more round
         scheduleGentlemenSingle.PlayNextRound();
         scheduleLadiesSingle.PlayNextRound();
         this.date = Court.GetDateEndRound();
         
 
     }
+    //same as play() but for one schedule
     public void Play(ScheduleType scheduleType)
     {
         ChargePlayers();
@@ -100,6 +110,7 @@ public class Tournament {
         
 
     }
+    //get the opponents for a schedule 
     private Queue<Opponent> GetOpponents(ScheduleType scheduleType)
     {
         Queue<Opponent> opponents = new Queue<Opponent>();
@@ -123,6 +134,7 @@ public class Tournament {
         }
         return opponents;
     }
+    //get the opponents for a LadiesDouble schedule
     private Queue<Opponent> GetOpponentsLadiesDouble()
     {
         Queue<Opponent> opponents = new Queue<Opponent>();
@@ -133,6 +145,7 @@ public class Tournament {
         }
         return opponents;
     }
+    //get the opponents for a LadiesSingle schedule
     private Queue<Opponent> GetOpponentsLadiesSingle()
     {
         Queue<Opponent> opponents = new Queue<Opponent>();
@@ -143,6 +156,7 @@ public class Tournament {
         }
         return opponents;
     }
+    //get the opponents for a GentlemenDouble schedule
     private Queue<Opponent> GetOpponentsGentlemenDouble()
     {
         Queue<Opponent> opponents = new Queue<Opponent>();
@@ -153,6 +167,7 @@ public class Tournament {
         }
         return opponents;
     }
+    //get the opponents for a GentlemenSingle schedule
     private Queue<Opponent> GetOpponentsGentlemenSingle()
     {
         Queue<Opponent> opponents = new Queue<Opponent>();
@@ -163,6 +178,7 @@ public class Tournament {
         }
         return opponents;
     }
+    //get the opponents for a MixedDouble schedule
     private Queue<Opponent> GetOpponentsMixedDouble()
     {
         Queue<Opponent> opponents = new Queue<Opponent>();
@@ -174,6 +190,7 @@ public class Tournament {
         return opponents;
     }
 
+    //charge players from database
     public void ChargePlayers()
     {
         DAO<Player> daoPlayer = SQLFactory.GetPlayerDAO();

@@ -16,6 +16,7 @@ public class Court {
 
     private static Queue<Court> courts= new Queue<Court>();
 
+    // <------ getters and setters ------>
     public int IdCourt 
     {
         get { return idCourt; }
@@ -29,6 +30,7 @@ public class Court {
         }
     }
 
+    // <------ constructors ------>
     public Court(int idCourt,int nbSpectators, bool covered, Tournament tournament)
     {
         this.idCourt = idCourt;
@@ -38,6 +40,9 @@ public class Court {
         this.date = tournament.Date;
     }
 
+    // <------ methods ------>
+
+    // the function returns a court if there is one available
     public static Court Available() {
         if(courts.Count > 0)
         {
@@ -51,6 +56,7 @@ public class Court {
 
 
     }
+    // the function returns the date of end of the last match of the round
     public static DateTime GetDateEndRound()
     {
         
@@ -69,6 +75,8 @@ public class Court {
         return maxDate;
 
     }
+    // the function release the court after a match and add the duration of the match to the date of the court
+    // if the match ends after 19h the date is set to 8h30 the next day because we don't start match after 19h
     public void Release(TimeSpan duration_match) {
         
         this.date = date.Add(duration_match);
@@ -80,11 +88,7 @@ public class Court {
         courts.Enqueue(this);
     }
 
-
-    public string ToString()
-    {
-        return "Court " + nbSpectators + " " + covered + " " + tournament;
-    }
+    // the function charges the courts from the database
     public static void ChargeCourts()
     {
         DAO<Court> dao = SQLFactory.GetCourtDAO();
