@@ -11,18 +11,11 @@ namespace projet.view
        
         private Tournament tournament;
 
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
-
 
         public WinnersWindow(Tournament tournament)
         {
             InitializeComponent();
             this.tournament = tournament;
-
-            // Set StartDate and EndDate properties
-            StartDate = $"Start Date: {DateTime.Now.ToString("dd/MM/yyyy")}";
-            EndDate = $"End Date: {tournament.Date.ToString("dd/MM/yyyy")}";
 
             // Display winners for each schedule type
             DisplayWinners();
